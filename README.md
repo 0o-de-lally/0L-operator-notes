@@ -35,3 +35,9 @@ All commands start with a keystroke prefix of "ctrl+b".
 1. Split a tmux pane up-down : `ctrl+b` then double quotes: `"`
 1. Zoom in or out of the pane: `ctrl+b` then `z`
 
+# Default Services
+In one tmux session you might set up your window with 4 "panes" to start or monitor different 0L services:
+- `ol start`: this service orchestrates a number of OL services
+- `tail -f ~/.0L/logs/node.log`: this will watch the logs for the `diem-node` service, which is the validator node software.
+- `tail -f ~/.0L/logs/tower.log`: this will watch the logs for the ol `tower` service, which does the chained proof-of-delay.
+- `tail -f ~/.0L/logs/monitor.log`: this will watch the logs for the ol `ol serve -c` service, which serves this node's web monitor on port 3030.
