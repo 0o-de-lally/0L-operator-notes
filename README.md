@@ -51,9 +51,27 @@ Usually these files should not be manually edited.
 
 The main config files are:
 - `0L.toml` which has default settings for all the 0L tools (tower, transaction sending).
+
+Recreate this file with: `ol init --app`
+
 - `key_store.json` contains the private keys for operating then node (note that the "owner" key is not contained there, this is the key that can move GAS coins).
+
+
+Recreate this file with: `ol init --key-store`
+
 - `validator.node.yaml`: has all the settings for `diem-node` to start as a validator node.
+
+Recreate this file with: `ol init --val
+
+- `vfn.node.yaml`: has all the settings for `diem-node` to start as a validator-fullnode (VFN) node. Once created on a validator ndoe this is transferred to a different host.
+
+Recreate this file with: `ol init --vfn
+
+
 - `fullnode.node.yaml`: has all the settings for `diem-node` to start as a FULLNODE node, which you may have to use when your validator falls out of the validator set.
+
+Recreate this file with: `ol init --fullnode
+
 
 ## Nuclear option: overwrite all files:
 Do what would be done at onboarding of the validator, but skip the mining.
@@ -61,8 +79,21 @@ Do what would be done at onboarding of the validator, but skip the mining.
 onboard val --skip-mining --autopay-file <path to your autopay_batch.json file --upstream_peer http://localhost:8080 
 ```
 
-# Validators with Rotated Keys
-Usually any mnemonic derives a default `account address` for those keys. However an account address is decoupled from the mnemonic. Meaning, the account can be linked to a different mnemonic, by "key rotation". Unless you explicitly say so, the 0L tools will assume you are using the *DERIVED ADDRESS* connected to the mnemonic, and you may get failed transactions.
+# Refreshing RPC peers
+
+All 0L services require the HTTP addresses of fullnodes that are operating RPC services. Meaning they can ingest transaction to the network.
+As a validator ordinarily this will be your `localhost:8080`, but it also needs a list of upstream RPC peers at times to bootstrap information, and compare sync.
+
+You can manually update the `upstream_nodes` are set in `0L.toml` to a list of upstream peers. Or you can set this from a "playlist" file.
+
+`ol init --rpc-playlist`
+
+
+# Validator Accounts with Rotated Keys
+
+Usually any mnemonic derives a default `account address` for those keys. However an account address is decoupled from the mnemonic. Meaning, the account can be linked to a different mnemonic, by "key rotation", WITHOUT changing the address.
+
+Unless you explicitly say so, the 0L tools will assume you are using the *DERIVED ADDRESS* connected to the mnemonic, and you may get failed transactions.
 
 That all said, the solution is to make sure your `0L.toml` file has the intended account address and authkey.
 
